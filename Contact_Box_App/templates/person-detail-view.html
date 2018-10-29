@@ -3,5 +3,6 @@
 {% block content %}
     {{ object }}<br>
     {{ object.address }}
-    <input type="button" onclick="location.href='/'" value="Back">
+    <a href="{% url 'person-update-view' object.id %}">Edit</a>
+    <a href="{% url 'person-list-view' %}">Back</a>
 {% endblock %}

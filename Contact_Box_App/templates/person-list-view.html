@@ -7,12 +7,12 @@
                 <tr>
                     <td>{{ forloop.counter }}.</td>
                     <td><a href="/show/{{ object.id }}">{{ object }}</a></td>
-                    <td><input type="button" onclick="location.href='/modify/{{ object.id }}'">Edit</td>
-                    <td><input type="button" onclick="location.href='/delete/{{ object.id }}'">Delete</td>
+                    <td><input type="button" onclick="location.href='{% url 'person-update-view' object.id %}'" value="Edit"></td>
+                    <td><input type="button" onclick="location.href='{% url 'person-delete-view' object.id %}'" value="Delete"></td>
                 </tr>
             {% endfor %}
         </table>
-        <input type="button" onclick="location.href='/new'" value='Add Person'>
+        <input type="button" onclick="location.href='{% url 'person-create-view' %}'" value='Add Person'>
     </div>
 {% endblock %}
 
