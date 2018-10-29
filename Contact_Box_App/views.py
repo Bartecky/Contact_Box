@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from .models import  Person, Groups
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import PersonModelForm
@@ -23,12 +23,11 @@ class PersonCreateView(CreateView):
     template_name = 'person-create-view.html'
     form_class = PersonModelForm
 
-    def get_success_url(self):
-        return '/'
+
 
 
 class PersonUpdateView(UpdateView):
-    template_name = 'person-create-view.html'
+    template_name = 'person-update-view.html'
     form_class = PersonModelForm
 
     def get_object(self, queryset=None):
@@ -36,7 +35,7 @@ class PersonUpdateView(UpdateView):
         return get_object_or_404(Person, id=id_)
 
     def get_success_url(self):
-        return '/'
+        return reverse('person-list-view')
 
 
 class PersonDeleteView(DeleteView):
@@ -47,5 +46,5 @@ class PersonDeleteView(DeleteView):
         return get_object_or_404(Person, id=id_)
 
     def get_success_url(self):
-        return '/'
+        return reverse('person-list-view')
 

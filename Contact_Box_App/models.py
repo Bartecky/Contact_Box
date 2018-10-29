@@ -24,7 +24,7 @@ class Person(models.Model):
         return '{} {}'.format(self.name, self.surname)
 
     def get_absolute_url(self):
-        return reverse('person-list-view', kwargs={'id': self.id})
+        return reverse('person-detail-view', kwargs={'id': self.id})
 
 
 class Phone(models.Model):
