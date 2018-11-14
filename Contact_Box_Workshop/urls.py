@@ -14,18 +14,41 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf.urls import url
 from django.urls import path
-from Contact_Box_App.views import PersonListView, \
-                                  PersonDetailView, \
-                                  PersonCreateView, \
-                                  PersonUpdateView, \
-                                  PersonDeleteView
+from Contact_Box_App.views import (
+    PersonListView,
+    PersonDetailView,
+    PersonCreateView,
+    PersonUpdateView,
+    PersonDeleteView,
+    AddressCreateView,
+    PhoneCreateView,
+    PhoneDeleteView,
+    EmailCreateView,
+    EmailDeleteView,
+    GroupsListView,
+    GroupCreateView,
+    GroupDetailView,
+    GroupDeleteView
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', PersonListView.as_view(), name='person-list-view'),
-    path('show/<int:id>', PersonDetailView.as_view(), name='person-detail-view'),
-    path('new/', PersonCreateView.as_view(), name='person-create-view'),
-    path('modify/<int:id>', PersonUpdateView.as_view(), name='person-update-view'),
-    path('delete/<int:id>', PersonDeleteView.as_view(), name='person-delete-view'),
+    url(r'^show/(?P<id>(\d)+)/$', PersonDetailView.as_view(), name='person-detail-view'),
+    url(r'^new/$', PersonCreateView.as_view(), name='person-create-view'),
+    url(r'^modify/(?P<id>(\d)+)/$', PersonUpdateView.as_view(), name='person-update-view'),
+    url(r'delete/(?P<id>(\d)+)/$', PersonDeleteView.as_view(), name='person-delete-view'),
+    url(r'^(?P<id>(\d)+)/addAddress/$', AddressCreateView.as_view(), name='address-create-view'),
+    url(r'^(?P<id>(\d)+)/addPhone/$', PhoneCreateView.as_view(), name='phone-create-view'),
+    url(r'^delete-phone/(?P<id>(\d)+)/$', PhoneDeleteView.as_view(), name='phone-delete-view'),
+    url(r'^(?P<id>(\d)+)/addEmail/$', EmailCreateView.as_view(), name='email-create-view'),
+    url(r'^delete-phone/(?P<id>(\d)+)/$', PhoneDeleteView.as_view(), name='phone-delete-view'),
+    url(r'^delete-email/(?P<id>(\d)+)/$', EmailDeleteView.as_view(), name='email-delete-view'),
+    url(r'^groups/$', GroupsListView.as_view(), name='groups-list-view'),
+    url(r'^addGroup$', GroupCreateView.as_view(), name='groups-create-view'),
+    url(r'^showGroup/(?P<id>(\d)+)/$', GroupDetailView.as_view(), name='group-detail-view'),
+    url(r'^delete-group/(?P<id>(\d)+)/$', GroupDeleteView.as_view(), name='group-delete-view')
 
 ]

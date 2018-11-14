@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <strong>Group: {{ group }}</strong><br>
+    {% for object in object.person.all %}
+        {{ object }}<br>
+    {% endfor %}
+    <p>
+    <a href="{% url 'groups-list-view' %}">Back to group list</a> &emsp;
+    <a href="{% url 'person-list-view' %}">Main</a>
+    </p>
+{% endblock %}

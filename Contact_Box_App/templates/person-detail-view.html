@@ -1,8 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{ object }}<br>
-    {{ object.address }}
-    <a href="{% url 'person-update-view' object.id %}">Edit</a>
-    <a href="{% url 'person-list-view' %}">Back</a>
+<strong>{{ object }}</strong><br>
+    Description: {{ object.description }}<br>
+    <p>
+        {% if object.address %}
+            Address: {{ object.address }}
+        {% else %}
+            No address
+            <a href="{% url 'address-create-view' object.id %}">Add</a>
+        {% endif %}
+    </p>
+    <p>
+        {% if object.phone_set %}
+            Phone:
+            <a href="{% url 'phone-create-view' object.id %}">Add</a><br>
+            {% for phone in object.phone_set.all %}
+                &emsp;{{ phone }} ({{ phone.type }})
+                <a href="{% url 'phone-delete-view' phone.id %}">Delete</a><br>
+            {% endfor %}
+        {% else %}
+            No phone
+        {% endif %}<br>
+    </p>
+    <p>
+        {% if object.email_set %}
+            E-mail:
+            <a href="{% url 'email-create-view' object.id %}">Add</a><br>
+            {% for email in object.email_set.all %}
+                &emsp; {{ email }} ({{ email.type }})
+                <a href="{% url 'email-delete-view' email.id %}">Delete</a><br>
+            {% endfor %}
+        {% else %}
+            No email
+        {% endif %}<br>
+    </p>
+    <a href="{% url 'person-list-view' %}"><strong>Back</strong></a>
 {% endblock %}
+

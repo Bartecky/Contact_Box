@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <table>
+            {% for object in object_list %}
+                <tr>
+                    <td><a href="{% url 'group-detail-view' object.id %}">{{ object.name }}</a></td>
+                    <td>&emsp;<a href="{% url 'group-delete-view' object.id %}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="button" onclick="location.href='{% url 'person-list-view' %}'" value='Back'>
+        <input type="button" onclick="location.href='{% url 'groups-create-view' %}'" value="Add Group">
+    </div>
+
+{% endblock %}
