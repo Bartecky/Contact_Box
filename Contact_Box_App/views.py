@@ -1,7 +1,7 @@
-from django.shortcuts import get_object_or_404, reverse
-from .models import Person, Groups, Phone, Email
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .forms import PersonModelForm, AddressModelForm, PhoneModelForm, EmailModelForm, GroupsModelForm
+from django.shortcuts import get_object_or_404, reverse, render, HttpResponseRedirect
+from .models import Person, Group, Phone, Email
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+from .forms import PersonModelForm, PersonUpdateForm, AddressModelForm, PhoneModelForm, EmailModelForm, GroupsModelForm
 
 
 # Create your views here.
@@ -18,19 +18,52 @@ class PersonDetailView(DetailView):
         _id = self.kwargs.get('id')
         return get_object_or_404(Person, id=_id)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        groups = Group.objects.all()
+        context['groups'] = groups
+        return context
+
 
 class PersonCreateView(CreateView):
     template_name = 'person-create-view.html'
     form_class = PersonModelForm
 
 
-class PersonUpdateView(UpdateView):
-    template_name = 'person-update-view.html'
-    form_class = PersonModelForm
+class PersonUpdateView(View):
 
-    def get_object(self, queryset=None):
-        id_ = self.kwargs.get('id')
-        return get_object_or_404(Person, id=id_)
+    def get(self, request, id):
+        person = Person.objects.get(id=id)
+        form = PersonUpdateForm(instance=person, initial={'phone': person.phone_set.first(),
+                                                          'email': person.email_set.first()})
+        return render(request, 'person-update-view.html', {'form': form})
+
+    def post(self, request, id):
+        form = PersonUpdateForm(request.POST or None)
+        ctx = {
+            'form': form
+        }
+        if form.is_valid():
+            person = Person.objects.get(id=id)
+            name = form.cleaned_data['name']
+            surname = form.cleaned_data['surname']
+            address = form.cleaned_data['address']
+            email = form.cleaned_data['email']
+            obj_email = Email.objects.create(address=email, person=person)
+            phone = form.cleaned_data['phone']
+            obj_phone = Phone.objects.create(number=phone, person=person)
+            description = form.cleaned_data['description']
+            person.name = name
+            person.surname = surname
+            person.address = address
+            person.description = description
+            person.phone_set.add(obj_phone)
+            person.email_set.add(obj_email)
+            person.save()
+            return HttpResponseRedirect(reverse('person-detail-view', kwargs={'id': person.id}))
+        return render(request, 'person-update-view.html', ctx)
+
+
 
 
 class PersonDeleteView(DeleteView):
@@ -54,6 +87,12 @@ class AddressCreateView(CreateView):
         person.address = form.save()
         person.save()
         return super(AddressCreateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        person = Person.objects.get(id=self.kwargs.get('id'))
+        context['person'] = person
+        return context
 
     def get_success_url(self):
         return reverse('person-detail-view', kwargs={'id': self.kwargs.get('id')})
@@ -90,7 +129,9 @@ class PhoneDeleteView(DeleteView):
         return get_object_or_404(Phone, id=id_)
 
     def get_success_url(self):
-        return reverse('person-list-view')
+        id = self.kwargs.get('id')
+        phone = Phone.objects.get(id=id)
+        return reverse('person-detail-view', kwargs={'id': phone.person.id})
 
 
 #
@@ -125,12 +166,14 @@ class EmailDeleteView(DeleteView):
         return get_object_or_404(Email, id=id_)
 
     def get_success_url(self):
-        return reverse('person-list-view')
+        id = self.kwargs.get('id')
+        email = Email.objects.get(id=id)
+        return reverse('person-detail-view', kwargs={'id': email.person.id})
 
 
-class GroupsListView(ListView):
+class GroupListView(ListView):
     template_name = 'group-list-view.html'
-    queryset = Groups.objects.all().order_by('name')
+    queryset = Group.objects.all().order_by('name')
 
 
 class GroupCreateView(CreateView):
@@ -143,7 +186,7 @@ class GroupDetailView(DetailView):
 
     def get_object(self, queryset=None):
         id_ = self.kwargs.get('id')
-        return get_object_or_404(Groups, id=id_)
+        return get_object_or_404(Group, id=id_)
 
 
 class GroupDeleteView(DeleteView):
@@ -151,7 +194,7 @@ class GroupDeleteView(DeleteView):
 
     def get_object(self, queryset=None):
         id_ = self.kwargs.get('id')
-        return get_object_or_404(Groups, id=id_)
+        return get_object_or_404(Group, id=id_)
 
     def get_success_url(self):
         return reverse('groups-list-view')

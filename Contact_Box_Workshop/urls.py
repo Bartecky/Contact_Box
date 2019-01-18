@@ -27,7 +27,7 @@ from Contact_Box_App.views import (
     PhoneDeleteView,
     EmailCreateView,
     EmailDeleteView,
-    GroupsListView,
+    GroupListView,
     GroupCreateView,
     GroupDetailView,
     GroupDeleteView
@@ -46,7 +46,7 @@ urlpatterns = [
     url(r'^(?P<id>(\d)+)/addEmail/$', EmailCreateView.as_view(), name='email-create-view'),
     url(r'^delete-phone/(?P<id>(\d)+)/$', PhoneDeleteView.as_view(), name='phone-delete-view'),
     url(r'^delete-email/(?P<id>(\d)+)/$', EmailDeleteView.as_view(), name='email-delete-view'),
-    url(r'^groups/$', GroupsListView.as_view(), name='groups-list-view'),
+    url(r'^groups/$', GroupListView.as_view(), name='groups-list-view'),
     url(r'^addGroup$', GroupCreateView.as_view(), name='groups-create-view'),
     url(r'^showGroup/(?P<id>(\d)+)/$', GroupDetailView.as_view(), name='group-detail-view'),
     url(r'^delete-group/(?P<id>(\d)+)/$', GroupDeleteView.as_view(), name='group-delete-view')

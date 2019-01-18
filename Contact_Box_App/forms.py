@@ -1,5 +1,5 @@
 from django import forms
-from .models import Person, Address, Phone, Email, Groups
+from .models import Person, Address, Phone, Email, Group
 
 
 class PersonModelForm(forms.ModelForm):
@@ -35,7 +35,26 @@ class PhoneModelForm(forms.ModelForm):
         return number
 
 
+class PersonUpdateForm(forms.ModelForm):
+    phone = forms.IntegerField(required=False)
+    email = forms.EmailField(required=False)
+
+    class Meta:
+        model = Person
+        fields = [
+            'name',
+            'surname',
+            'description',
+            'address',
+            'phone',
+            'email'
+
+        ]
+
+
 class EmailModelForm(forms.ModelForm):
+    person = forms.ModelChoiceField(queryset=Person.objects.all(), widget=forms.HiddenInput)
+
     class Meta:
         model = Email
         fields = [
@@ -50,5 +69,5 @@ class GroupsModelForm(forms.ModelForm):
                                             widget=forms.CheckboxSelectMultiple)
 
     class Meta:
-        model = Groups
+        model = Group
         fields = '__all__'

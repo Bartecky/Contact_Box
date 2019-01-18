@@ -16,6 +16,9 @@ class Address(models.Model):
     def get_absolute_url(self):
         return reverse('person-detail-view', kwargs={'id': self.id})
 
+    class Meta:
+        verbose_name_plural = 'Addresses'
+
 
 class Person(models.Model):
     name = models.CharField(max_length=32)
@@ -31,7 +34,7 @@ class Person(models.Model):
 
 
 class Phone(models.Model):
-    number = models.IntegerField()
+    number = models.IntegerField(unique=True, null=True, blank=True)
     type = models.CharField(max_length=32, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
@@ -43,7 +46,7 @@ class Phone(models.Model):
 
 
 class Email(models.Model):
-    address = models.EmailField(max_length=32)
+    address = models.EmailField(max_length=32, unique=True, null=True, blank=True)
     type = models.CharField(max_length=32, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
@@ -51,7 +54,7 @@ class Email(models.Model):
         return '{}'.format(self.address)
 
 
-class Groups(models.Model):
+class Group(models.Model):
     name = models.CharField(max_length=32)
     person = models.ManyToManyField(Person)
 

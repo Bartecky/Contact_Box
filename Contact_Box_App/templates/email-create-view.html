@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-    <p>Add e-mail to <strong>{{ person }}</strong></p>
+    <div class="green">Add e-mail to <strong>{{ person }}</strong></div>
    <form method="post" action=""> {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Add email">
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-dark" value="Add email">
     </form>
 {% endblock %}

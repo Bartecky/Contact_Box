@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
     <div>
+    <h3>Person list - CONTACT BOX</h3>
     <table>
-        <tr>
-            <th>Person</th>
-        </tr>
         {% for object in object_list %}
             <tr>
                 <td><strong><a class="green" href="/show/{{ object.id }}">{{ object }}</a></strong></td>

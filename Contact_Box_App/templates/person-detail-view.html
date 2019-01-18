@@ -3,37 +3,45 @@
 {% block content %}
     <strong class="green">{{ object }}</strong><br>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-8">
             <strong>Description:</strong> {{ object.description }}<br>
             {% if object.address %}
                 <strong>Address:</strong> {{ object.address }}
-            {% else %}
-                No address |
-                <small><a href="{% url 'address-create-view' object.id %}">Add</a></small>
             {% endif %}<br>
-            {% if object.phone_set %}
-                <strong>Phone:</strong>
+            <small><a href="{% url 'address-create-view' object.id %}">Add address</a></small><br>
+
+            {% if object.phone_set.all %}
+                <strong>Phone:</strong><br>
                 {% for phone in object.phone_set.all %}
-                    &emsp;{{ phone }}({{ phone.type }})
+                    &emsp;{{ phone }}({{ phone.type }}) | <a href="{% url 'phone-delete-view' phone.id %}">Del</a><br>
                 {% endfor %}
-            {% else %}
-                No phone
-            {% endif %}<br>
-            {% if object.email_set %}
+            {% endif %}
+            <small><a href="{% url 'phone-create-view' object.id %}">Add phone</a></small><br>
+            {% if object.email_set.all %}
                 <strong>E-mail:</strong><br>
                 {% for email in object.email_set.all %}
-                    <li>{{ email }} ({{ email.type }})</li>
+                    &emsp;{{ email }} ({{ email.type }}) | <a href="{% url 'email-delete-view' email.id %}">Del</a><br>
                 {% endfor %}
-            {% else %}
-                No email
-            {% endif %}<br>
-        <input type="button" class="btn btn-warning" onclick="location.href='{% url 'person-update-view' object.id %}'"
-               value='Update'><hr>
+            {% endif %}
+            <small><a href="{% url 'email-create-view' object.id %}">Add email</a></small><br>
+            <input type="button" class="btn btn-dark"
+                   onclick="location.href='{% url 'person-update-view' object.id %}'"
+                   value='Update'>
+            <hr>
         </div>
+        <div class="col-sm-4">
+            <strong>Groups:</strong><br>
+            {% for group in object.group_set.all %}
+                <a class="green" href="{% url 'group-detail-view' group.id %}">{{ group }}</a><br>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-12">
-        <input type="button" class="btn btn-success" onclick="location.href='{% url 'person-list-view' %}'"
-               value='Contact List'>
+            <input type="button" class="btn btn-success" onclick="location.href='{% url 'person-list-view' %}'"
+                   value='Contact List'>
         </div>
+
 
     </div>
 {% endblock %}
