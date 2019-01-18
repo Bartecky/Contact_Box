@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
-
 {% block content %}
     <div>
-        <table>
-            {% for object in object_list %}
-                <tr>
-                    <td>{{ forloop.counter }}.</td>
-                    <td><a href="/show/{{ object.id }}">{{ object }}</a></td>
-                    <td><input type="button" onclick="location.href='{% url 'person-update-view' object.id %}'" value="Edit"></td>
-                    <td><input type="button" onclick="location.href='{% url 'person-delete-view' object.id %}'" value="Delete"></td>
-                </tr>
-            {% endfor %}
-        </table>
-        <input type="button" onclick="location.href='{% url 'person-create-view' %}'" value='Add Person'>
-    </div>
-    <div>
-        <h3><a href="{% url 'groups-list-view' %}">Groups</a></h3>
-    </div>
+    <table>
+        <tr>
+            <th>Person</th>
+        </tr>
+        {% for object in object_list %}
+            <tr>
+                <td><strong><a class="green" href="/show/{{ object.id }}">{{ object }}</a></strong></td>
+                <td><small>
+                    <a href="{% url 'person-update-view' object.id %}">Edit</a> |
+                    <a href="{% url 'person-delete-view' object.id %}">Delete</a>
+                </small></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <hr>
+    <input type="button" class="btn btn-success" onclick="location.href='{% url 'person-create-view' %}'"
+           value='Add Person'>
+    <input type="button" class="btn btn-primary" onclick="location.href='{% url 'groups-list-view' %}'"
+           value='Group List'>
 {% endblock %}
 
