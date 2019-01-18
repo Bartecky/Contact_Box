@@ -64,7 +64,7 @@ class EmailModelForm(forms.ModelForm):
         ]
 
 
-class GroupsModelForm(forms.ModelForm):
+class GroupModelForm(forms.ModelForm):
     person = forms.ModelMultipleChoiceField(queryset=Person.objects.all(),
                                             widget=forms.CheckboxSelectMultiple)
 

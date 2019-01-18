@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url
-from django.urls import path
 from Contact_Box_App.views import (
     PersonListView,
     PersonDetailView,
@@ -30,6 +29,7 @@ from Contact_Box_App.views import (
     GroupListView,
     GroupCreateView,
     GroupDetailView,
+    GroupUpdateView,
     GroupDeleteView
 )
 
@@ -48,6 +48,7 @@ urlpatterns = [
     url(r'^groups/$', GroupListView.as_view(), name='group-list-view'),
     url(r'^addGroup$', GroupCreateView.as_view(), name='group-create-view'),
     url(r'^showGroup/(?P<id>(\d)+)/$', GroupDetailView.as_view(), name='group-detail-view'),
+    url(r'^modifyGroup/(?P<pk>(\d)+)/$', GroupUpdateView.as_view(), name='group-update-view'),
     url(r'^delete-group/(?P<id>(\d)+)/$', GroupDeleteView.as_view(), name='group-delete-view')
 
 ]

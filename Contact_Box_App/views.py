@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, reverse, render, HttpResponseRedirect
 from .models import Person, Group, Phone, Email
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
-from .forms import PersonModelForm, PersonUpdateForm, AddressModelForm, PhoneModelForm, EmailModelForm, GroupsModelForm
+from .forms import PersonModelForm, PersonUpdateForm, AddressModelForm, PhoneModelForm, EmailModelForm, GroupModelForm
 
 
 # Create your views here.
@@ -62,8 +62,6 @@ class PersonUpdateView(View):
             person.save()
             return HttpResponseRedirect(reverse('person-detail-view', kwargs={'id': person.id}))
         return render(request, 'person-update-view.html', ctx)
-
-
 
 
 class PersonDeleteView(DeleteView):
@@ -178,7 +176,7 @@ class GroupListView(ListView):
 
 class GroupCreateView(CreateView):
     template_name = 'group-create-view.html'
-    form_class = GroupsModelForm
+    form_class = GroupModelForm
 
 
 class GroupDetailView(DetailView):
@@ -187,6 +185,12 @@ class GroupDetailView(DetailView):
     def get_object(self, queryset=None):
         id_ = self.kwargs.get('id')
         return get_object_or_404(Group, id=id_)
+
+
+class GroupUpdateView(UpdateView):
+    queryset = Group.objects.all()
+    form_class = GroupModelForm
+    template_name = 'group-update-view.html'
 
 
 class GroupDeleteView(DeleteView):
