@@ -34,20 +34,19 @@ from Contact_Box_App.views import (
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', PersonListView.as_view(), name='person-list-view'),
-    url(r'^show/(?P<id>(\d)+)/$', PersonDetailView.as_view(), name='person-detail-view'),
+    url('^admin/', admin.site.urls),
+    url('^$', PersonListView.as_view(), name='person-list-view'),
     url(r'^new/$', PersonCreateView.as_view(), name='person-create-view'),
+    url(r'^show/(?P<id>(\d)+)/$', PersonDetailView.as_view(), name='person-detail-view'),
     url(r'^modify/(?P<id>(\d)+)/$', PersonUpdateView.as_view(), name='person-update-view'),
     url(r'delete/(?P<id>(\d)+)/$', PersonDeleteView.as_view(), name='person-delete-view'),
     url(r'^(?P<id>(\d)+)/addAddress/$', AddressCreateView.as_view(), name='address-create-view'),
     url(r'^(?P<id>(\d)+)/addPhone/$', PhoneCreateView.as_view(), name='phone-create-view'),
     url(r'^delete-phone/(?P<id>(\d)+)/$', PhoneDeleteView.as_view(), name='phone-delete-view'),
     url(r'^(?P<id>(\d)+)/addEmail/$', EmailCreateView.as_view(), name='email-create-view'),
-    url(r'^delete-phone/(?P<id>(\d)+)/$', PhoneDeleteView.as_view(), name='phone-delete-view'),
     url(r'^delete-email/(?P<id>(\d)+)/$', EmailDeleteView.as_view(), name='email-delete-view'),
-    url(r'^groups/$', GroupListView.as_view(), name='groups-list-view'),
-    url(r'^addGroup$', GroupCreateView.as_view(), name='groups-create-view'),
+    url(r'^groups/$', GroupListView.as_view(), name='group-list-view'),
+    url(r'^addGroup$', GroupCreateView.as_view(), name='group-create-view'),
     url(r'^showGroup/(?P<id>(\d)+)/$', GroupDetailView.as_view(), name='group-detail-view'),
     url(r'^delete-group/(?P<id>(\d)+)/$', GroupDeleteView.as_view(), name='group-delete-view')
 
