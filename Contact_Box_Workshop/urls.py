@@ -31,7 +31,8 @@ from Contact_Box_App.views import (
     GroupDetailView,
     GroupUpdateView,
     GroupDeleteView,
-    AddingPersonToGroup
+    AddingPersonToGroup,
+    RemovePersonFromGroup
 )
 
 urlpatterns = [
@@ -52,5 +53,7 @@ urlpatterns = [
     url(r'^modifyGroup/(?P<pk>(\d)+)/$', GroupUpdateView.as_view(), name='group-update-view'),
     url(r'^delete-group/(?P<id>(\d)+)/$', GroupDeleteView.as_view(), name='group-delete-view'),
     url(r'^(?P<id>(\d)+)/addGroup/$', AddingPersonToGroup.as_view(), name='adding-person-to-group-view'),
+    url(r'^showGroup/(?P<id>(\d)+)/del/(?P<person_id>(\d)+)$', RemovePersonFromGroup.as_view(),
+        name='remove-person-from-group-view'),
 
 ]

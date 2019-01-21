@@ -11,6 +11,8 @@ from .forms import (
     GroupModelForm,
     AddingPersonToGroupForm
 )
+from django.contrib import messages
+
 
     # Create your views here.
 
@@ -226,4 +228,18 @@ class AddingPersonToGroup(View):
             person.save()
             return redirect(reverse_lazy('person-list-view'))
         return render(request, 'adding-person-to-group-view.html', {'form': form})
+
+class RemovePersonFromGroup(View):
+    def get(self, request, *args, **kwargs):
+        group_id = self.kwargs.get('id')
+        person_id = self.kwargs.get('person_id')
+        group = Group.objects.get(id=group_id)
+        obj_person = Person.objects.get(id=person_id)
+        group.person.remove(obj_person)
+        group.save()
+        messages.success(request, '{}'.format('Removed'))
+        return redirect(reverse('group-detail-view', kwargs={'id': group_id}))
+
+
+
 

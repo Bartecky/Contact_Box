@@ -2,10 +2,24 @@
 
 {% block content %}
     <h3>{{ group }}</h3><br>
-    <h5>Persons in group:</h5>
-    {% for object in object.person.all %}
-        <a href="{% url 'person-detail-view' object.id %}">{{ object }}</a><br>
-    {% endfor %}<hr>
+    <table class="table table-hover">
+        <tr>
+            <th>Person</th>
+            <th>Action</th>
+        </tr>
+        {% for object in object.person.all %}
+            <tr>
+                <td>
+                    <a href="{% url 'person-detail-view' object.id %}">{{ object }}</a><br>
+                </td>
+                <td>
+                    <input type="button" class="btn btn-warning" onclick="location.href='{% url 'remove-person-from-group-view' group.id object.id %}'"
+           value='Del'>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <hr>
     <input type="button" class="btn btn-primary" onclick="location.href='{% url 'group-list-view' %}'"
-                   value='Group List'>
+           value='Group List'>
 {% endblock %}
