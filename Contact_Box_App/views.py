@@ -48,20 +48,18 @@ class PersonUpdateView(View):
             name = form.cleaned_data['name']
             surname = form.cleaned_data['surname']
             address = form.cleaned_data['address']
-            email = form.cleaned_data['email']
-            obj_email = Email.objects.create(address=email, person=person)
-            phone = form.cleaned_data['phone']
-            obj_phone = Phone.objects.create(number=phone, person=person)
             description = form.cleaned_data['description']
             person.name = name
             person.surname = surname
             person.address = address
             person.description = description
-            person.phone_set.add(obj_phone)
-            person.email_set.add(obj_email)
             person.save()
             return HttpResponseRedirect(reverse('person-detail-view', kwargs={'id': person.id}))
-        return render(request, 'person-update-view.html', ctx)
+        return reverse('person-detail-view', kwargs={'id': self.kwargs.get('id')})
+
+
+
+
 
 
 class PersonDeleteView(DeleteView):

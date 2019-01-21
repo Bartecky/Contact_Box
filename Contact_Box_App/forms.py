@@ -36,9 +36,6 @@ class PhoneModelForm(forms.ModelForm):
 
 
 class PersonUpdateForm(forms.ModelForm):
-    phone = forms.IntegerField(required=False)
-    email = forms.EmailField(required=False)
-
     class Meta:
         model = Person
         fields = [
@@ -46,9 +43,6 @@ class PersonUpdateForm(forms.ModelForm):
             'surname',
             'description',
             'address',
-            'phone',
-            'email'
-
         ]
 
 

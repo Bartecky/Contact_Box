@@ -7,8 +7,11 @@
             <strong>Description:</strong> {{ object.description }}<br>
             {% if object.address %}
                 <strong>Address:</strong> {{ object.address }}
+            {% else %}
+                <small><a href="{% url 'address-create-view' object.id %}">Add address</a></small>
+
             {% endif %}<br>
-            <small><a href="{% url 'address-create-view' object.id %}">Add address</a></small><br>
+            <br>
 
             {% if object.phone_set.all %}
                 <strong>Phone:</strong><br>
@@ -16,14 +19,16 @@
                     &emsp;{{ phone }}({{ phone.type }}) | <a href="{% url 'phone-delete-view' phone.id %}">Del</a><br>
                 {% endfor %}
             {% endif %}
-            <small><a href="{% url 'phone-create-view' object.id %}">Add phone</a></small><br>
+            <small><a href="{% url 'phone-create-view' object.id %}">Add phone</a></small>
+            <br>
             {% if object.email_set.all %}
                 <strong>E-mail:</strong><br>
                 {% for email in object.email_set.all %}
                     &emsp;{{ email }} ({{ email.type }}) | <a href="{% url 'email-delete-view' email.id %}">Del</a><br>
                 {% endfor %}
             {% endif %}
-            <small><a href="{% url 'email-create-view' object.id %}">Add email</a></small><br>
+            <small><a href="{% url 'email-create-view' object.id %}">Add email</a></small>
+            <br>
             <input type="button" class="btn btn-dark"
                    onclick="location.href='{% url 'person-update-view' object.id %}'"
                    value='Update'>
