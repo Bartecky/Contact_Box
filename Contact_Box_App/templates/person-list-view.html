@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col-sm-12">
             <h3>Person list - CONTACT BOX</h3><br>
-            <table>
+             <table class="table table-hover">
                 {% for object in object_list %}
                     <tr>
-                        <td><strong><a class="green" href="/show/{{ object.id }}">{{ object }}</a></strong></td>
+                        <td><strong><a class="purple" href="/show/{{ object.id }}">{{ object }}</a></strong></td>
                         <td>
                             <small>
                                 <a href="{% url 'person-update-view' object.id %}">Edit</a> |
@@ -20,7 +20,7 @@
             <hr>
             <input type="button" class="btn btn-success" onclick="location.href='{% url 'person-create-view' %}'"
                    value='Add Person'>
-            <input type="button" class="btn btn-primary" onclick="location.href='{% url 'group-list-view' %}'"
+            <input type="button" class="btn btn-info" onclick="location.href='{% url 'group-list-view' %}'"
                    value='Group List'>
         </div>
     </div>

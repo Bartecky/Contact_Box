@@ -4,13 +4,13 @@
     <div class="row">
         <div class="col-sm-12">
             <h3>Group list</h3><br>
-            <table>
+            <table class="table table-hover">
                 {% for object in object_list %}
                     <tr>
-                        <td><a class="green" href="{% url 'group-detail-view' object.id %}">{{ object }}</a></td>
+                        <td><a class="purple" href="{% url 'group-detail-view' object.id %}">{{ object }}</a></td>
                         <td>
                             <small>
-                                <a href="{% url 'group-update-view' object.id %}">Edit</a>
+                                <a href="{% url 'group-update-view' object.id %}">Edit</a> |
                                 <a href="{% url 'group-delete-view' object.id %}">Delete</a>
                             </small>
                         </td>

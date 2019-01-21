@@ -241,5 +241,3 @@ class RemovePersonFromGroup(View):
         return redirect(reverse('group-detail-view', kwargs={'id': group_id}))
 
 
-
-
