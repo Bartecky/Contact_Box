@@ -32,6 +32,9 @@
             <input type="button" class="btn btn-dark"
                    onclick="location.href='{% url 'person-update-view' object.id %}'"
                    value='Update'>
+             <input type="button" class="btn btn-dark"
+                   onclick="location.href='{% url 'adding-person-to-group-view' object.id %}'"
+                   value='Adding to group'>
             <hr>
         </div>
         <div class="col-sm-4">

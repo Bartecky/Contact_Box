@@ -1,10 +1,19 @@
-from django.shortcuts import get_object_or_404, reverse, render, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, reverse, render, HttpResponseRedirect, redirect
+from django.urls import reverse_lazy
 from .models import Person, Group, Phone, Email
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
-from .forms import PersonModelForm, PersonUpdateForm, AddressModelForm, PhoneModelForm, EmailModelForm, GroupModelForm
+from .forms import (
+    PersonModelForm,
+    PersonUpdateForm,
+    AddressModelForm,
+    PhoneModelForm,
+    EmailModelForm,
+    GroupModelForm,
+    AddingPersonToGroupForm
+)
 
+    # Create your views here.
 
-# Create your views here.
 
 class PersonListView(ListView):
     template_name = 'person-list-view.html'
@@ -56,10 +65,6 @@ class PersonUpdateView(View):
             person.save()
             return HttpResponseRedirect(reverse('person-detail-view', kwargs={'id': person.id}))
         return reverse('person-detail-view', kwargs={'id': self.kwargs.get('id')})
-
-
-
-
 
 
 class PersonDeleteView(DeleteView):
@@ -200,3 +205,25 @@ class GroupDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('group-list-view')
+
+
+class AddingPersonToGroup(View):
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs.get('id')
+        person = Person.objects.get(id=id)
+        form = AddingPersonToGroupForm(initial={'person': person})
+        ctx = {
+            'form': form
+        }
+        return render(request, 'adding-person-to-group-view.html', ctx)
+
+    def post(self, request, id):
+        form = AddingPersonToGroupForm(request.POST or None)
+        if form.is_valid():
+            person = Person.objects.get(id=id)
+            group = form.cleaned_data['groups']
+            person.group_set.set(group)
+            person.save()
+            return redirect(reverse_lazy('person-list-view'))
+        return render(request, 'adding-person-to-group-view.html', {'form': form})
+

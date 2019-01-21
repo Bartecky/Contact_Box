@@ -65,3 +65,10 @@ class GroupModelForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = '__all__'
+
+
+class AddingPersonToGroupForm(forms.Form):
+    person = forms.ModelChoiceField(queryset=Person.objects.all(),
+                                    widget=forms.HiddenInput)
+    groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(),
+                                            widget=forms.CheckboxSelectMultiple)
