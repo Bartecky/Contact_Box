@@ -3,6 +3,6 @@
 {% block content %}
     <form method="post" action=""> {% csrf_token %}
         {{ form.as_p }}
-        <input class="btn-btn success" type="submit" value="Add group">
+        <input class="btn btn-warning" type="submit" value="Add group">
     </form>
 {% endblock %}

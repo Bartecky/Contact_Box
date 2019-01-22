@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <strong class="green">{{ object }}</strong><br>
+    <h3 class="purple">{{ object }}</h3><br>
     <div class="row">
         <div class="col-sm-8">
             <strong>Description:</strong> {{ object.description }}<br>
@@ -40,7 +40,7 @@
         <div class="col-sm-4">
             <strong>Groups:</strong><br>
             {% for group in object.group_set.all %}
-                <a class="green" href="{% url 'group-detail-view' group.id %}">{{ group }}</a><br>
+                <a class="purple" href="{% url 'group-detail-view' group.id %}">{{ group }}</a><br>
             {% endfor %}
         </div>
     </div>

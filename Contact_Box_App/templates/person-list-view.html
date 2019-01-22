@@ -2,9 +2,16 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-5">
             <h3>Person list - CONTACT BOX</h3><br>
-             <table class="table table-hover">
+        </div>
+        <div class="col-sm-7">
+            {% include 'person-search-form.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-hover">
                 {% for object in object_list %}
                     <tr>
                         <td><strong><a class="purple" href="/show/{{ object.id }}">{{ object }}</a></strong></td>
@@ -18,9 +25,9 @@
                 {% endfor %}
             </table>
             <hr>
-            <input type="button" class="btn btn-success" onclick="location.href='{% url 'person-create-view' %}'"
+            <input type="button" class="btn btn-warning" onclick="location.href='{% url 'person-create-view' %}'"
                    value='Add Person'>
-            <input type="button" class="btn btn-info" onclick="location.href='{% url 'group-list-view' %}'"
+            <input type="button" class="btn btn-dark" onclick="location.href='{% url 'group-list-view' %}'"
                    value='Group List'>
         </div>
     </div>

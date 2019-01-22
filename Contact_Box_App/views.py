@@ -12,14 +12,29 @@ from .forms import (
     AddingPersonToGroupForm
 )
 from django.contrib import messages
+from django.db.models import Q
 
 
-    # Create your views here.
+# Create your views here.
 
 
 class PersonListView(ListView):
     template_name = 'person-list-view.html'
     queryset = Person.objects.all().order_by('surname')
+    paginate_by = 8
+
+    def get_queryset(self, *args, **kwargs):
+        qs = Person.objects.all()
+        query = self.request.GET.get('q', None)
+        if query is not None:
+            qs = qs.filter(
+                Q(surname__icontains=query) |
+                Q(name__icontains=query)
+            )
+            return qs
+        else:
+            qs = Person.objects.all()
+            return qs
 
 
 class PersonDetailView(DetailView):
@@ -229,6 +244,7 @@ class AddingPersonToGroup(View):
             return redirect(reverse_lazy('person-list-view'))
         return render(request, 'adding-person-to-group-view.html', {'form': form})
 
+
 class RemovePersonFromGroup(View):
     def get(self, request, *args, **kwargs):
         group_id = self.kwargs.get('id')
@@ -239,5 +255,3 @@ class RemovePersonFromGroup(View):
         group.save()
         messages.success(request, '{}'.format('Removed'))
         return redirect(reverse('group-detail-view', kwargs={'id': group_id}))
-
-
