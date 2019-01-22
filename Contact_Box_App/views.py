@@ -189,6 +189,7 @@ class EmailDeleteView(DeleteView):
 class GroupListView(ListView):
     template_name = 'group-list-view.html'
     queryset = Group.objects.all().order_by('name')
+    paginate_by = 8
 
     def get_queryset(self, *args, **kwargs):
         qs = Group.objects.all()
