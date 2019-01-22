@@ -3,7 +3,7 @@
 {% block content %}
    <div class="row">
         <div class="col-sm-5">
-            <h3>Person list - CONTACT BOX</h3><br>
+            <h3>Group list - CONTACT BOX</h3><br>
         </div>
         <div class="col-sm-7">
             {% include 'group-search-form.html' %}
@@ -14,7 +14,7 @@
             <table class="table table-hover">
                 {% for object in object_list %}
                     <tr>
-                        <td><a class="purple" href="{% url 'group-detail-view' object.id %}">{{ object }}</a></td>
+                        <td><a class="purple" href="{% url 'group-detail-view' object.id %}">{{ object }} | {{ object.person.all|length }}</a></td>
                         <td>
                             <small>
                                 <a href="{% url 'group-update-view' object.id %}">Edit</a> |
