@@ -31,10 +31,7 @@ class PersonListView(ListView):
                 Q(surname__icontains=query) |
                 Q(name__icontains=query)
             )
-            return qs
-        else:
-            qs = Person.objects.all()
-            return qs
+        return qs
 
 
 class PersonDetailView(DetailView):
@@ -192,6 +189,15 @@ class EmailDeleteView(DeleteView):
 class GroupListView(ListView):
     template_name = 'group-list-view.html'
     queryset = Group.objects.all().order_by('name')
+
+    def get_queryset(self, *args, **kwargs):
+        qs = Group.objects.all()
+        query = self.request.GET.get('q', None)
+        if query is not None:
+            qs = qs.filter(
+                Q(name__icontains=query)
+            )
+        return qs
 
 
 class GroupCreateView(CreateView):

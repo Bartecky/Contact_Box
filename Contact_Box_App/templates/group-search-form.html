@@ -1,0 +1,6 @@
+<form method="get" action="{% url 'group-list-view' %}">
+    <div class="form-group">
+        <input class="form-control" type="text" name="q" placeholder="Find group by name" value="{{ request.GET.q }}">
+    </div>
+    <input class="btn btn-primary" type="submit" value="Search">
+</form>

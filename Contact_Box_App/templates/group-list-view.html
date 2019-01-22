@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+   <div class="row">
+        <div class="col-sm-5">
+            <h3>Person list - CONTACT BOX</h3><br>
+        </div>
+        <div class="col-sm-7">
+            {% include 'group-search-form.html' %}
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
-            <h3>Group list</h3><br>
             <table class="table table-hover">
                 {% for object in object_list %}
                     <tr>
